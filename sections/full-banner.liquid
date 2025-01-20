@@ -1,0 +1,356 @@
+{{ 'component-slide.css' | asset_url | stylesheet_tag }}
+
+<gf-slideshow
+  class="slider-mobile-gutter full-banner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  id="Slider-{{ section.id }}"
+  data-autoplay="{{ section.settings.auto_rotate }}"
+  data-slide-interval="{{ section.settings.slide_interval | times: 1000 }}">
+  <div class="gf-slideshow__wrapper">
+    {%- for block in section.blocks -%}
+      <div
+        class="gf-slideshow__slide"
+        {{ block.shopify_attributes }}
+        data-slide-index="{{ forloop.index0 }}">
+        {%- if block.settings.image != blank -%}
+          {% assign height = section.settings.slide_height %}
+          <div class="gf-slideshow__media{% if height == 'adapt' %} gf-slideshow__media--adapt{% endif %}">
+            {%- if forloop.first -%}
+              {{ block.settings.image
+ | image_url: width: 3840
+ | image_tag:
+ loading: 'eager',
+ class: 'gf-slideshow__image',
+ sizes: '100vw'
+              }}
+            {%- else -%}
+              {{ block.settings.image
+ | image_url: width: 3840
+ | image_tag:
+ loading: 'lazy',
+ class: 'gf-slideshow__image',
+ sizes: '100vw'
+              }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="gf-slideshow__content-wrapper">
+          <div class="gf-slideshow__content">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="gf-slideshow__heading h1 {% if block.settings.heading_color != 'text' %}text-{{ block.settings.heading_color }}{% endif %}">
+                {{ block.settings.heading }}
+              </h2>
+            {%- endif -%}
+
+            {%- if block.settings.subheading != blank -%}
+              <div class="gf-slideshow__text uppercase rte {% if block.settings.text_color != 'text' %}text-{{ block.settings.text_color }}{% endif %}">
+                <p>{{ block.settings.subheading }}</p>
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <div class="underline--gf">
+                <a
+                  href="{{ block.settings.button_link }}"
+                  class="underline uppercase h2 bold{% if block.settings.show_modal %} js-modal-trigger{% endif %}"
+                  {% if block.settings.show_modal %}
+                  data-modal-id="Modal-{{ block.id }}"
+                  {% endif %}>
+                  {{ block.settings.button_label }}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if block.settings.show_modal -%}
+          <modal-dialog id="Modal-{{ block.id }}" class="modal">
+            <div class="modal__content" role="dialog">
+              <button class="modal__close-button" aria-label="{{ 'accessibility.close' | t }}">
+                {% render 'icon-close' %}
+              </button>
+              <div class="modal__content-wrapper">
+                {%- if block.settings.modal_heading != blank -%}
+                  <h2 class="modal__heading">{{ block.settings.modal_heading }}</h2>
+                {%- endif -%}
+                {{ block.settings.modal_text }}
+              </div>
+            </div>
+          </modal-dialog>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="gf-slideshow__controls"></div>
+  {%- endif -%}
+</gf-slideshow>
+
+{% javascript %}
+  class SlideshowComponent extends HTMLElement {
+    constructor() {
+      super();
+      this.slider = this.querySelector('.gf-slideshow__wrapper');
+      this.slides = this.querySelectorAll('.gf-slideshow__slide');
+      this.prevButton = this.querySelector('.gf-slideshow__control--prev');
+      this.nextButton = this.querySelector('.gf-slideshow__control--next');
+      this.dots = this.querySelectorAll('.gf-slideshow__dot');
+
+      this.currentSlide = 0;
+      this.autoplay = this.dataset.autoplay === 'true';
+      this.interval = parseInt(this.dataset.slideInterval) || 5000;
+
+      this.init();
+    }
+
+    init() {
+      this.showSlide(0);
+      this.bindEvents();
+      if (this.autoplay) 
+        this.startAutoplay();
+      
+
+
+    }
+
+    bindEvents() {
+      if (this.prevButton) 
+        this.prevButton.addEventListener('click', () => this.prevSlide());
+      
+
+
+      if (this.nextButton) 
+        this.nextButton.addEventListener('click', () => this.nextSlide());
+      
+
+
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.showSlide(index));
+      });
+    }
+
+    showSlide(index) {
+      this.slides[this.currentSlide].classList.remove('is-active');
+      this.dots[this.currentSlide].classList.remove('is-active');
+
+      this.currentSlide = index;
+
+      this.slides[this.currentSlide].classList.add('is-active');
+      this.dots[this.currentSlide].classList.add('is-active');
+    }
+
+    nextSlide() {
+      const next = (this.currentSlide + 1) % this.slides.length;
+      this.showSlide(next);
+    }
+
+    prevSlide() {
+      const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+      this.showSlide(prev);
+    }
+
+    startAutoplay() {
+      this.autoplayInterval = setInterval(() => this.nextSlide(), this.interval);
+    }
+
+    stopAutoplay() {
+      if (this.autoplayInterval) {
+        clearInterval(this.autoplayInterval);
+      }
+    }
+  }
+
+  class ModalDialog extends HTMLElement {
+    constructor() {
+      super();
+      this.querySelector('.modal__close-button').addEventListener('click', () => {
+        this.close();
+      });
+    }
+
+    open() {
+      this.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    close() {
+      this.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  customElements.define('gf-slideshow-component', SlideshowComponent);
+  customElements.define('modal-dialog', ModalDialog);
+
+// Modal trigger handling
+  document.querySelectorAll('.js-modal-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      const modalId = trigger.dataset.modalId;
+      const modal = document.getElementById(modalId);
+      if (modal) 
+        modal.open();
+      
+
+
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+  {
+    "name": "Full Banner",
+    "class": "section",
+    "settings": [
+      {
+        "type": "select",
+        "id": "slide_height",
+        "options": [
+          {
+            "value": "adapt",
+            "label": "Adapt to image"
+          },
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "medium",
+        "label": "Slide height"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "checkbox",
+        "id": "auto_rotate",
+        "default": false,
+        "label": "Auto-rotate slides"
+      },
+      {
+        "type": "range",
+        "id": "slide_interval",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "unit": "s",
+        "label": "Change slides every",
+        "default": 5
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "default": "Slide heading",
+            "label": "Heading"
+          },
+          {
+            "type": "select",
+            "id": "heading_color",
+            "options": [
+              {
+                "value": "text",
+                "label": "Default"
+              },
+              {
+                "value": "white",
+                "label": "White"
+              },
+              {
+                "value": "black",
+                "label": "Black"
+              }
+            ],
+            "default": "text",
+            "label": "Heading color"
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "default": "Tell your brand's story through images",
+            "label": "Subheading"
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "options": [
+              {
+                "value": "text",
+                "label": "Default"
+              },
+              {
+                "value": "white",
+                "label": "White"
+              },
+              {
+                "value": "black",
+                "label": "Black"
+              }
+            ],
+            "default": "text",
+            "label": "Text color"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "default": "Button label",
+            "label": "Button label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_modal",
+            "default": false,
+            "label": "Show modal popup"
+          },
+          {
+            "type": "text",
+            "id": "modal_heading",
+            "label": "Modal heading"
+          },
+          {
+            "type": "richtext",
+            "id": "modal_text",
+            "label": "Modal text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Full Banner",
+        "blocks": [
+          {
+            "type": "slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

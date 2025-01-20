@@ -1513,6 +1513,26 @@
         "name": "Image with text"
       }
     },
+	"marquee": {
+		"name": "Marquee",
+		"settings": {
+			"title": {
+				"label": "Title",
+				"default": "GO FL3XX"
+			},
+			"secondary_title": {
+				"label": "Secondary Title",
+				"default": "CHICAGO DROP"
+			},
+			"separator": {
+				"label": "Separator",
+				"default": "//"
+			}
+		},
+		"presets": {
+			"name": "Marquee"
+		}
+	},
     "multirow": {
       "name": "Multirow",
       "settings": {

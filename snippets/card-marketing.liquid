@@ -1,0 +1,74 @@
+{% comment %} 
+  Renders a marketing card
+ 
+  Accepts: 
+  - title: {String} Title text to display 
+  - image_url: {String} URL of the image to display 
+  - link: {String} URL for the card link 
+{% endcomment %}
+
+<div class="header__promo-card">
+  <a
+    href="{{ link }}"
+    class="header-modal__nav-link pointer relative header__menu-item header__menu-item--parent"
+    js-nav-link="">
+
+
+    <picture class="lazypicture ">
+
+      <img
+        class="w-full "
+        src="{{ image_url }}"
+        loading="lazy"
+        alt=""
+        style="--ar-mobile: 1.0;  ">
+    </picture>
+    <span class="promo-card__text h6">{{ title }}</span>
+  </a>
+</div>
+
+<style>
+  .marketing-card-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 333px;
+  }
+
+  .card--marketing {
+    background: rgb(var(--color-background));
+    height: 100%;
+  }
+
+  .card--marketing .card__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card--marketing .card__media {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .card--marketing .card__content {
+    padding: 2rem;
+  }
+
+  .card--marketing .card__heading {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+
+  .card--marketing .marketing-media {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .card--marketing .marketing-media img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+</style>

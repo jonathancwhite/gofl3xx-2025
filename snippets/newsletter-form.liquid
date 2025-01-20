@@ -1,0 +1,30 @@
+{{ 'snippet-newsletter-form.css' | asset_url | stylesheet_tag }}
+
+<div class="newsletter-form__wrapper relative">
+  <div class="newsletter-form__input-wrapper">
+    <div class="newsletter-form__field relative">
+      <input
+        type="email"
+        id="newsletter-form-input"
+        name="contact[email]"
+        value=""
+        autocomplete="email"
+        autocorrect="off"
+        autocapitalize="none"
+        required
+        aria-require="true"
+        placeholder="Email address">
+      <button type="submit" class="newsletter-form__button">
+        <svg
+          width="15"
+          height="14"
+          viewBox="0 0 15 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.8248 4.08325L7.40816 9.69784L0.991496 4.08325" stroke="#0D0D0D" />
+        </svg>
+        <span class="visually-hidden">Subscribe</span>
+      </button>
+    </div>
+  </div>
+</div>

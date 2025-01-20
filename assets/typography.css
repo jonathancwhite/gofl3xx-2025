@@ -1,0 +1,132 @@
+html {
+  font-size: 62.5%;
+}
+
+body,
+.body,
+.p {
+  font: var(--gf-body-font);
+  text-transform: var(--gf-body-text-transform);
+  letter-spacing: var(--gf-body-letter-spacing);
+}
+
+.p--large {
+  font: var(--gf-body-font-large);
+}
+
+h1,
+.h1 {
+  font: var(--gf-h1-font);
+  text-transform: var(--gf-h1-text-transform);
+  letter-spacing: var(--gf-h1-letter-spacing);
+}
+
+h2 {
+  font: var(--gf-h2-font);
+  text-transform: var(--gf-h2-text-transform);
+  letter-spacing: var(--gf-h2-letter-spacing);
+}
+
+h3,
+.h3 {
+  font: var(--gf-h3-font);
+  text-transform: var(--gf-h3-text-transform);
+  letter-spacing: var(--gf-h3-letter-spacing);
+}
+
+h4,
+.h4 {
+  font: var(--gf-h4-font);
+  text-transform: var(--gf-h4-text-transform);
+  letter-spacing: var(--gf-h4-letter-spacing);
+}
+
+h5,
+.h5 {
+  font: var(--gf-h5-font);
+  text-transform: var(--gf-h5-text-transform);
+  letter-spacing: var(--gf-h5-letter-spacing);
+}
+
+h6,
+.h6 {
+  font: var(--gf-h6-font);
+  text-transform: var(--gf-h6-text-transform);
+  letter-spacing: var(--gf-h6-letter-spacing);
+}
+
+.body {
+  font: var(--gf-body-font);
+  text-transform: var(--gf-body-text-transform);
+  letter-spacing: var(--gf-body-letter-spacing);
+}
+
+.body--large {
+  font: var(--gf-body-font-large);
+  text-transform: var(--gf-body-text-transform);
+  letter-spacing: var(--gf-body-letter-spacing);
+}
+
+.utility {
+  font: var(--gf-body-utility);
+  text-transform: var(--gf-utility-text-transform);
+  letter-spacing: var(--gf-utility-letter-spacing);
+}
+
+.utility--large {
+  font: var(--gf-body-utility-large);
+}
+
+.caption {
+  font: var(--gf-body-caption);
+  text-transform: var(--gf-caption-text-transform);
+  letter-spacing: var(--gf-caption-letter-spacing);
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.light {
+  opacity: 0.7;
+}
+
+.break {
+  word-break: break-word;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.underline {
+  text-decoration: underline;
+}

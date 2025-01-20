@@ -1,0 +1,124 @@
+<gf-broadcast>
+  <details id="Details-HeaderMenu-{{ menu_link.handle }}" class="megamenu pointer header__menu-item header__menu-item--parent">
+    <summary id="HeaderMenu-{{ menu_link.handle }}" class="header__menu-item list-menu__item link focus-inset">
+      <span class="{% if menu_link.child_active %}header__active-menu-item
+        {% endif %} h6">
+        {{- menu_link.title | escape -}}
+      </span>
+    </summary>
+
+    <div class="broadcast-menu__content gradient motion-reduce">
+      <div class="container flex jcb">
+        <ul class="broadcast-menu__list" role="list">
+          {%- if menu_link.title == 'SHOP' -%}
+            <li class="broadcast-menu__category">
+              <a href="/collections/all" class="h6 link--text">
+                Collections</a>
+            </li>
+            {%- for childlink in menu_link.links -%}
+              <li>
+                <a href="{{ childlink.url }}" class="broadcast-menu__link link--text">
+                  {{ childlink.title }}
+                </a>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for childlink in menu_link.links -%}
+              <li>
+                <a href="{{ childlink.url }}" class="broadcast-menu__link link--text">
+                  {{ childlink.title }}
+                </a>
+              </li>
+            {%- endfor -%}
+          {%- endif %}
+        </ul>
+        <div class="broadcast-menu__marketing">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'marketing' -%}
+              {% render 'card-marketing'
+                , title: block.settings.title
+                , image_url: block.settings.image_url
+                , link: block.settings.link
+              %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </details>
+</gf-broadcast>
+
+<style>
+  .mega-menu {
+    position: static;
+  }
+
+  .broadcast-menu__content {
+    background-color: rgb(var(--color-background));
+    position: absolute;
+    left: -3rem;
+    right: 0;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    padding: 1rem 0;
+    opacity: 0;
+    transform: translateY(-1.5rem);
+    transition: opacity var(--duration-default) ease
+    , transform var(--duration-default) ease;
+    min-height: 40vh;
+  }
+
+  .broadcast-menu__category {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+  }
+
+  .megamenu[open] .broadcast-menu__content {
+    opacity: 1;
+    transform: translateY(1rem);
+    width: 100vw;
+  }
+
+  .broadcast-menu__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: fit-content;
+  }
+
+  .broadcast-menu__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    transition: color var(--duration-short) ease;
+    text-transform: uppercase;
+  }
+
+  .broadcast-menu__link:hover {
+    color: rgb(var(--color-foreground));
+  }
+
+  .broadcast-menu__link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    transition: transform var(--duration-short) ease;
+  }
+
+  .broadcast-menu__link:hover svg {
+    transform: translateX(0.3rem);
+  }
+
+  @media screen and (min-width: 990px) {
+    .header__inline-menu {
+      position: relative;
+    }
+  }
+</style>

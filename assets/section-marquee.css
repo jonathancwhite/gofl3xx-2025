@@ -1,0 +1,60 @@
+/* Marquee styles */
+:root {
+  --marquee-width: 12.5%;
+  --marquee-gap: 2rem;
+}
+
+.marquee {
+  width: 100%;
+  --gap: 4rem;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--marquee-gap);
+}
+
+/* Pause on hover */
+.marquee:hover .marquee__content {
+  animation-play-state: paused;
+}
+
+.marquee p {
+  margin: 2rem 0;
+}
+
+.marquee .p {
+  font-size: 1.6rem;
+}
+
+.marquee__content {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--marquee-gap);
+  min-width: var(--marquee-width);
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--marquee-gap)));
+  }
+}
+
+/* Pause animation when reduced-motion is set */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__content {
+    animation-play-state: paused !important;
+  }
+}
+
+.marquee-image {
+  height: 50px;
+  width: auto;
+  display: inline-block;
+}

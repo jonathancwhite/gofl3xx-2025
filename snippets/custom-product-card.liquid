@@ -1,0 +1,157 @@
+{%- unless skip_styles -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
+  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+  {{ 'custom-product-card.css' | asset_url | stylesheet_tag }}
+
+{%- endunless -%}
+{%- if card_product and card_product != empty -%}
+  <gf-product-card add-to-cart="" has-size="" class="custom-product-card">
+  <div class="card-wrapper">
+    <a href="{{ card_product.url }}" class="full-unstyled-link">
+      <span class="visually-hidden">{{ card_product.title }}</span>
+
+      <div class="card card--product" tabindex="-1">
+        <div class="card__inner">
+          <div class="card-mobile-options__container">
+            <button class="card-mobile-options__toggle"
+                    data-variant-id="{{ card_product.first_available_variant.id }}"
+                    data-mobile-quick-add-toggle=""
+                    aria-label="Toggle quick add">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" fill="none" viewBox="0 0 10 10" width="10" height="10">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.51a.5.5 0 000 1h3.5l.01 3.5a.5.5 0 001-.01V5.5l3.5-.01a.5.5 0 00-.01-1H5.5L5.49.99a.5.5 0 00-1 .01v3.5l-3.5.01H1z" fill="currentColor">
+              </path></svg>
+            </button>
+
+            <div class="card-mobile-options__options">
+              {% for variant in card_product.variants %}
+                <button
+                  class="card-mobile-options__variant{% unless variant.available %} disabled{% endunless %}"
+                  {% unless variant.available %}disabled{% endunless %}
+                  data-variant-id="{{ variant.id }}"
+                >
+                  {{ variant.title }}
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div>
+            <div class="media media--adapt media--hover-effect"
+                 style="padding-bottom: {{ 1 | divided_by: card_product.featured_media.aspect_ratio | times: 100 }}%;">
+              {%- if card_product.featured_media -%}
+                <img
+                  srcset="{%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if card_product.featured_media.width >= 533 -%}{{ card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if card_product.featured_media.width >= 720 -%}{{ card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if card_product.featured_media.width >= 940 -%}{{ card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if card_product.featured_media.width >= 1066 -%}{{ card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w"
+                  src="{{ card_product.featured_media | image_url: width: 533 }}"
+                  sizes="(min-width: 1400px) calc((100vw - 110px) / 4), (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                  alt="{{ card_product.featured_media.alt | escape }}"
+                  loading="lazy"
+                  class="motion-reduce"
+                  width="{{ card_product.featured_media.width }}"
+                  height="{{ card_product.featured_media.height }}"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="card__badge"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-information">
+        <div class="card-information__wrapper">
+          <div class="card-information__info-mobile-2">
+            <span class="card-information__text uppercase">
+              {{ card_product.title }}
+            </span>
+
+            <div class="card-information__options utility--large uppercase">
+              <span>size:</span>
+              {% for variant in card_product.variants %}
+                <button
+                  {% unless variant.available %}disabled{% endunless %}
+                  data-variant-id="{{ variant.id }}"
+                >
+                  {{ variant.title }}
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="price-container">
+            <div class="price p--large">
+              <dl>
+                <div class="price__regular">
+                  <dt>
+                    <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+                  </dt>
+                  <dd>
+                    <span class="price-item price-item--regular">
+                      {{ card_product.price | money }}
+                    </span>
+                  </dd>
+                </div>
+                <div class="price__sale">
+                  <dt>
+                    <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
+                  </dt>
+                  <dd>
+                    <span class="price-item price-item--sale">
+                      {{ card_product.price | money }}
+                    </span>
+                  </dd>
+                  <dt class="price__compare">
+                    <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+                  </dt>
+                  <dd class="price__compare">
+                    <s class="price-item price-item--regular">
+                      {%- if card_product.compare_at_price > card_product.price -%}
+                        {{ card_product.compare_at_price | money }}
+                      {%- endif -%}
+                    </s>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</gf-product-card>
+{%- else -%}
+  <!-- Placeholder Content for Empty Products -->
+  <div class="card-wrapper product-card-wrapper underline-links-hover">
+    <div class="card card--{{ settings.card_style }}">
+      <div class="card__inner">
+        <div class="card__media">
+          <div class="media media--transparent">
+            {%- if placeholder_image -%}
+              {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- else -%}
+              {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="card__content">
+          <h3 class="card__heading card__heading--placeholder">
+            <a role="link" aria-disabled="true" class="full-unstyled-link">
+              {{ 'onboarding.product_title' | t }}
+            </a>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+

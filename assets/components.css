@@ -1,0 +1,246 @@
+/* ------------------------------------------------------------ *\
+  gf Button
+\* ------------------------------------------------------------ */
+
+gf-button,
+gf-button-wrapper {
+  --gf-border-bottom-offset: -2px;
+  --gf-padding: 18px 40px;
+  --gf-text-transform: uppercase;
+  --gf-background: var(--gf-color-night);
+  --gf-color: var(--gf-color-day);
+  --gf-font: var(--gf-h5-font);
+  --gf-max-width: none;
+  --gf-min-height: 60px;
+}
+
+gf-button[disabled],
+gf-button-wrapper[disabled] {
+  --gf-background: var(--gf-color-neutral);
+}
+
+@media (hover: hover) {
+  gf-button:not([disabled]):hover,
+  gf-button-wrapper:not([disabled]):hover {
+    --gf-background: var(--gf-color-subdued);
+  }
+}
+
+gf-button[theme='secondary'],
+gf-button-wrapper[theme='secondary'] {
+  --gf-background: transparent;
+  --gf-border-color: var(--gf-color-night);
+  --gf-color: var(--gf-color-night);
+}
+
+gf-button[theme='secondary'][disabled],
+gf-button-wrapper[theme='secondary'][disabled] {
+  --gf-border-color: var(--gf-color-neutral);
+  --gf-color: var(--gf-color-neutral);
+}
+
+@media (hover: hover) {
+  gf-button[theme='secondary']:not([disabled]):hover,
+  gf-button-wrapper[theme='secondary']:not([disabled]):hover {
+    --gf-background: transparent;
+    --gf-color: var(--gf-color-brand-primary);
+    --gf-border-color: var(--gf-color-brand-primary);
+  }
+}
+
+gf-button[theme='tertiary'],
+gf-button-wrapper[theme='tertiary'] {
+  --gf-background: transparent;
+  --gf-color: var(--gf-color-night);
+  --gf-padding: 0;
+  --gf-underline-width: 2px;
+}
+
+gf-button[theme='tertiary'][disabled],
+gf-button-wrapper[theme='tertiary'][disabled] {
+  --gf-background: transparent;
+  --gf-color: var(--gf-color-neutral);
+}
+
+@media (hover: hover) {
+  gf-button[theme='tertiary']:not([disabled]):hover,
+  gf-button-wrapper[theme='tertiary']:not([disabled]):hover {
+    --gf-background: transparent;
+    --gf-color: var(--gf-color-subdued);
+  }
+}
+
+/* ------------------------------------------------------------ *\
+  Inputs
+\* ------------------------------------------------------------ */
+
+gf-input-wrapper {
+  --gf-placeholder-font-size: 14px;
+  --gf-left-indent-small: 15px;
+}
+
+gf-custom-select {
+  --gf-button-padding: 1.5rem;
+  --gf-options-width-offset: -1.5px;
+  --gf-options-min-width: calc(100% + 3px);
+  --gf-options-max-width: calc(100% + 3px);
+  --gf-options-max-height: 32rem;
+  --gf-option-color: var(--gf-color-subdued);
+  --gf-option-hover-background: var(--gf-color-light);
+  --gf-option-border-width: 1px;
+  --gf-option-border-color: var(--gf-color-neutral);
+}
+
+gf-input-wrapper,
+gf-custom-select {
+  --gf-font: var(--gf-body-font-large);
+  --gf-height: 50px;
+  --gf-placeholder-color: var(--gf-color-subdued);
+  --gf-focus-outline-offset: 0;
+  --gf-minified-font-size: 11px;
+  --gf-link-padding: 1rem;
+  --gf-placeholder-font-size: 14px;
+}
+
+gf-checkbox-wrapper {
+  --gf-input-width: 100%;
+  --gf-input-height: 100%;
+  --gf-width: 20px;
+  --gf-height: 20px;
+  --gf-check-border-width: 2px;
+  --gf-check-top: 1px;
+  --gf-check-left: 7px;
+  --gf-check-width: 5px;
+  --gf-check-height: 10px;
+}
+
+/* ------------------------------------------------------------ *\
+  gf Details Modal
+\* ------------------------------------------------------------ */
+
+gf-details-modal {
+  --gf-top: 100%;
+  --gf-modal-height: 100%;
+  --gf-modal-background: var(--gf-color-background);
+}
+
+gf-details-modal[ctx='filters'] {
+  --gf-position: fixed;
+  --gf-top: 0;
+  --gf-z-index-inner: 100;
+}
+
+/* ------------------------------------------------------------ *\
+  gf Quanttiy Input
+\* ------------------------------------------------------------ */
+
+gf-quantity-input {
+  --gf-button-width: 1.4rem;
+  --gf-height: 4rem;
+  --gf-padding: 0.5rem 1.5rem;
+  --gf-color: var(--gf-color-subdued);
+}
+
+/* Conflicts with rule above, might need more scope if quantity and regular input have different sizes */
+/* gf-input-wrapper {
+  --gf-font: var(--gf-body-font);
+} */
+
+gf-input-wrapper[label='stacked'] {
+  --gf-label-font: var(--gf-body-font);
+  --gf-label-margin: 0 0 0.25em;
+}
+
+gf-modal {
+  --gf-padding: 0 1rem;
+  --gf-background: var(--gf-color-day);
+  --gf-border-color: var(--gf-color-neutral);
+}
+
+gf-modal[ctx='product'] {
+  --gf-slotted-width: calc(100% - 2rem);
+  --gf-slotted-margin: 1rem 0 0;
+}
+
+gf-slider {
+  --gf-background: var(--gf-color-light);
+  --gf-button-background: var(--gf-color-day);
+  --gf-button-border: 1px solid var(--gf-color-neutral);
+  --gf-cell-width: calc(100% - 3rem);
+}
+
+gf-slider:not([open='true']) {
+  --gf-container-flex: flex;
+  --gf-container-flex-wrap: wrap;
+}
+
+gf-slideshow {
+  display: block;
+  --gf-cell-width: 100% !important;
+  --gf-video-width: 100%;
+  --gf-video-height: 100%;
+}
+
+gf-badge-wrapper {
+  --gf-font: var(--gf-body-utility);
+  --gf-text-transform: uppercase;
+  --gf-letter-spacing: 0.1em;
+  --gf-padding: 0.6rem 1rem;
+  --gf-radius: 0;
+  --gf-color-primary: var(--gf-color-day);
+  --gf-color-secondary: var(--gf-color-night);
+  --gf-background-primary: var(--gf-color-night);
+  --gf-background-secondary: var(--gf-color-brand-secondary);
+}
+
+/**
+ * Helps with the flash of unstyled components.
+ *
+ * Add to this as you build out new components that
+ * may abrasively flash before the JS file is interpreted.
+ */
+gf-tabs:not(:defined),
+gf-modal:not(:defined),
+gf-button:not(:defined),
+gf-button-wrapper:not(:defined),
+gf-details-modal:not(:defined),
+gf-quantity-input:not(:defined),
+gf-input-wrapper:not(:defined),
+gf-custom-select:not(:defined),
+gf-sticky-header:not(:defined),
+gf-badge-wrapper:not(:defined),
+gf-image-video:not(:defined),
+gf-collection-pagination:not(:defined),
+gf-inline-filter:not(:defined),
+vds-media:not(:defined),
+gf-size-guide:not(:defined),
+gf-brand-one:not(:defined),
+gf-slideshow:not(:defined),
+gf-slider:not(:defined),
+gf-history-grid:not(:defined),
+gf-featured-blog-wrapper:not(:defined),
+gf-featured-creator:not(:defined),
+gf-gallery:not(:defined) {
+  opacity: 0;
+}
+
+@supports selector(:has(+ *)) {
+  .events__container {
+    opacity: 0;
+  }
+
+  .events__container:has(gf-event-calendar:not(:empty)) {
+    opacity: 1;
+  }
+}
+
+gf-details-modal:not(:defined) {
+  visibility: hidden;
+  opacity: 0;
+  max-width: 0;
+  max-height: 0;
+}
+
+gf-product-card:not(:defined) :is(.card-mobile-options__container, .card-information__options) {
+  opacity: 0;
+}
