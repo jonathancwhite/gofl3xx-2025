@@ -100,7 +100,7 @@ body.body-padding {
 
 .header__heading-link .h2 {
   line-height: 1;
-  color: var(--gf-color-neutral);
+  color: var(--gf-color-day);
 }
 
 .header__heading-logo {

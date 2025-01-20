@@ -2520,7 +2520,7 @@ input[type='checkbox'] {
 .header-wrapper {
   display: block;
   position: relative;
-  background-color: rgb(var(--color-background));
+  /* background-color: rgb(var(--color-background)); */
 }
 
 .header-wrapper--border-bottom {
@@ -2616,15 +2616,16 @@ input[type='checkbox'] {
   padding: 0.75rem;
   text-decoration: none;
   word-break: break-word;
+  text-align: center;
 }
 
 .header__heading-link:hover .h2 {
-  color: rgb(var(--color-foreground));
+  color: #fff;
 }
 
 .header__heading-link .h2 {
   line-height: 1;
-  color: rgba(var(--color-foreground), 0.75);
+  color: #fff;
 }
 
 .header__heading-logo {
@@ -2978,13 +2979,23 @@ details[open] > .header__submenu {
   color: rgb(var(--color-foreground));
 }
 
-.header__menu-item span {
+.header__menu-item span,
+.header__utility a {
   transition: text-decoration var(--duration-short) ease;
 }
 
-.header__menu-item:hover span {
+.header__menu-item:hover span,
+.header__utility a:hover,
+.header__utility span:hover {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
+  text-decoration-thickness: 0.2rem;
+}
+
+.header__menu-item span.h6,
+.header__utility a.h6,
+.header__utility span.h6 {
+  color: #fff !important;
 }
 
 details[open] > .header__menu-item {
