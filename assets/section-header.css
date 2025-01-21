@@ -224,6 +224,42 @@ gf-header.has-open-megamenu .megamenu-overlay {
   color: var(--gf-color-text);
 }
 
+.header-inverse {
+  background-color: #fff;
+  color: #0d0d0d;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-inverse .header__heading-link .h2,
+.header-inverse span.h6,
+.header-inverse a.h6 {
+  color: #0d0d0d;
+}
+
+.header[data-menu-open='true'] {
+  background-color: var(--gf-color-day);
+  color: var(--gf-color-night);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header[data-menu-open='true'] span.h6,
+.header[data-menu-open='true'] a.h6 {
+  color: #0d0d0d;
+}
+
+.header[data-menu-open='true'] .header__heading-link .h2 {
+  color: #0d0d0d;
+}
+
+.header[data-menu-open='false'] {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header.header-transparent[data-menu-open='false'] {
+  background-color: transparent;
+  color: var(--gf-color-day);
+}
+
 @media screen and (min-width: 990px) {
   .header__menu-item {
     position: relative;

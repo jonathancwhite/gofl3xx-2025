@@ -33,7 +33,7 @@
 <script src="{{ 'cart-notification.js' | asset_url }}" defer></script>
 
 {% liquid
-  assign header_tag = 'div'
+  assign header_tag = 'sticky-header'
 %}
 
 {{ 'section-header.css' | asset_url | stylesheet_tag }}
@@ -120,7 +120,7 @@
     </slideshow-component>
   {%- endif -%}
 
-  <header class="header container container--full-width header-transparent" js-header="">
+  <header class="header container container--full-width header-transparent" js-header data-menu-open="false">
 
     <!-- Top-center logo or search -->
     {% if section.settings.logo_position == 'top-center' or section.settings.menu == blank %}
@@ -242,16 +242,24 @@
 
     connectedCallback() {
       this.header = document.querySelector('.section-header');
+      this.jsHeader = document.querySelector('[js-header]');
+      console.log('Connected Header Elements:', {
+        sectionHeader: this.header,
+        jsHeader: this.jsHeader
+      });
+
       this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
       this.headerBounds = {};
+      this.scrollThreshold = 100;
 
       this.setHeaderHeight();
+      console.log('Initial Header Height:', this.header?.offsetHeight);
 
       window.matchMedia('(max-width: 990px)').addEventListener('change', this.setHeaderHeight.bind(this));
 
       if (this.headerIsAlwaysSticky) {
         this.header.classList.add('shopify-section-header-sticky');
-      };
+      }
 
       this.currentScrollTop = 0;
       this.preventReveal = false;
@@ -262,6 +270,7 @@
 
       this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
       window.addEventListener('scroll', this.onScrollHandler, false);
+      console.log('Scroll listener added');
 
       this.createObserver();
     }
@@ -286,27 +295,36 @@
 
     onScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      console.log('Scroll Position:', scrollTop);
 
       if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
 
+      // Handle header transparency based on scroll position
+      if (scrollTop > this.scrollThreshold) {
+        this.jsHeader?.classList.remove('header-transparent');
+        this.jsHeader?.classList.add('header-inverse');
+      } else {
+        // Only add transparent back if menu is not open
+        if (this.jsHeader?.dataset.menuOpen !== 'true') {
+          this.jsHeader?.classList.add('header-transparent');
+          this.jsHeader?.classList.remove('header-inverse');
+        }
+      }
+
+      // Original scroll behavior
       if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        console.log('Scrolling down past header');
         this.header.classList.add('scrolled-past-header');
         if (this.preventHide) return;
         requestAnimationFrame(this.hide.bind(this));
       } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        console.log('Scrolling up past header');
         this.header.classList.add('scrolled-past-header');
         if (!this.preventReveal) {
           requestAnimationFrame(this.reveal.bind(this));
-        } else {
-          window.clearTimeout(this.isScrolling);
-
-          this.isScrolling = setTimeout(() => {
-            this.preventReveal = false;
-          }, 66);
-
-          requestAnimationFrame(this.hide.bind(this));
         }
       } else if (scrollTop <= this.headerBounds.top) {
+        console.log('At top of page');
         this.header.classList.remove('scrolled-past-header');
         requestAnimationFrame(this.reset.bind(this));
       }
@@ -344,6 +362,37 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
+
+class BroadcastMenu extends HTMLElement {
+  constructor() {
+    super();
+    this.header = document.querySelector('[js-header]');
+    this.details = this.querySelector('details');
+
+    if (this.details) {
+      this.details.addEventListener('toggle', this.onToggle.bind(this));
+    }
+  }
+
+  onToggle() {
+    const isOpen = this.details.hasAttribute('open');
+    this.header.dataset.menuOpen = isOpen.toString();
+
+    // Toggle header classes
+    if (isOpen) {
+      this.header.classList.remove('header-transparent');
+      this.header.classList.add('header-inverse');
+    } else {
+      // Only add transparent back if we're at the top of the page
+      if (window.scrollY === 0) {
+        this.header.classList.add('header-transparent');
+      }
+      this.header.classList.remove('header-inverse');
+    }
+  }
+}
+
+customElements.define('gf-broadcast', BroadcastMenu);
 {% endjavascript %}
 
 <script type="application/ld+json">

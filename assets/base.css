@@ -2995,15 +2995,18 @@ details[open] > .header__submenu {
 .header__menu-item span.h6,
 .header__utility a.h6,
 .header__utility span.h6 {
-  color: #fff !important;
+  color: #fff;
 }
 
 details[open] > .header__menu-item {
   text-decoration: underline;
+  text-decoration-color: #8c3838;
+  text-decoration-thickness: 0.2rem;
 }
 
 details[open]:hover > .header__menu-item {
   text-decoration-thickness: 0.2rem;
+  text-decoration-color: #8c3838;
 }
 
 details[open] > .header__menu-item .icon-caret {

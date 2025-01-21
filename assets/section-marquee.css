@@ -39,7 +39,7 @@
 
 @keyframes scroll {
   from {
-    transform: translateX(0);
+    transform: translateX(5%);
   }
   to {
     transform: translateX(calc(-100% - var(--marquee-gap)));

@@ -90,36 +90,50 @@
       <p class="h5">{{ section.settings.separator }}</p>
     </li>
   </ul>
+  <ul aria-hidden="true" class="marquee__content">
+    <li>
+      <p class="h5 italic">{{ section.settings.title }}</p>
+    </li>
+    <li>
+      <p class="h5">{{ section.settings.separator }}</p>
+    </li>
+    <li>
+      <p class="h5 italic">{{ section.settings.secondary_title }}</p>
+    </li>
+    <li>
+      <p class="h5">{{ section.settings.separator }}</p>
+    </li>
+  </ul>
 </section>
 
 {% schema %}
-{
-  "name": "t:sections.marquee.name",
-  "tag": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "t:sections.marquee.settings.title.label",
-      "default": "t:sections.marquee.settings.title.default"
-    },
-    {
-      "type": "text",
-      "id": "secondary_title",
-      "label": "t:sections.marquee.settings.secondary_title.label",
-      "default": "t:sections.marquee.settings.secondary_title.default"
-    },
-    {
-      "type": "text",
-      "id": "separator",
-      "label": "t:sections.marquee.settings.separator.label",
-      "default": "t:sections.marquee.settings.separator.default"
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:sections.marquee.presets.name"
-    }
-  ]
-}
+  {
+    "name": "t:sections.marquee.name",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.marquee.settings.title.label",
+        "default": "t:sections.marquee.settings.title.default"
+      },
+      {
+        "type": "text",
+        "id": "secondary_title",
+        "label": "t:sections.marquee.settings.secondary_title.label",
+        "default": "t:sections.marquee.settings.secondary_title.default"
+      },
+      {
+        "type": "text",
+        "id": "separator",
+        "label": "t:sections.marquee.settings.separator.label",
+        "default": "t:sections.marquee.settings.separator.default"
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.marquee.presets.name"
+      }
+    ]
+  }
 {% endschema %}
