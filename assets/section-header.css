@@ -132,6 +132,7 @@ body.body-padding {
 
 .header__utility a {
   color: currentColor;
+  text-transform: uppercase;
 }
 
 .header__search {
@@ -240,6 +241,7 @@ gf-header.has-open-megamenu .megamenu-overlay {
   background-color: var(--gf-color-day);
   color: var(--gf-color-night);
   transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
 }
 
 .header[data-menu-open='true'] span.h6,
@@ -262,7 +264,7 @@ gf-header.has-open-megamenu .megamenu-overlay {
 
 @media screen and (min-width: 990px) {
   .header__menu-item {
-    position: relative;
+    /* position: relative; */
     z-index: 2;
     color: currentColor;
   }

@@ -4,26 +4,34 @@
 {{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{{ 'typography.css' | asset_url | stylesheet_tag }}
 
 <footer class="footer">
   <div>
     <div class="footer__container container container--md">
       <div class="footer__body">
         <nav class="footer__blocks flex">
-          {% for linklist in settings.footer_menus %}
-            <div class="footer__block">
-              <h3 class="footer__menu-heading">{{ linklist.title }}</h3>
-              <ul>
-                {% for link in linklist.links %}
-                  <li class="footer__menu-link">
-                    <a class="body--large c-inherit" href="{{ link.url }}"
-                      {% if link.target == '_blank' %}target="_blank" rel="noopener noreferrer"{% endif %}>
-                      {{ link.title }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
+          {% for block in section.blocks %}
+            {% if block.type == 'link_list' %}
+              <div class="footer__block">
+                <h3 class="footer__menu-heading">{{ block.settings.heading }}</h3>
+                <ul>
+                  {% for link in linklists[block.settings.menu].links %}
+                    <li class="footer__menu-link">
+                      <a
+                        class="body c-inherit"
+                        href="{{ link.url }}"
+                        {% if link.target == '_blank' %}
+                          target="_blank" rel="noopener noreferrer"
+                        {% endif %}
+                      >
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
           {% endfor %}
         </nav>
 
@@ -40,7 +48,8 @@
   </div>
 
   <div class="footer__signoff container pv2 c-neutral flex jcb">
-    <small class="caption">© {{ 'now' | date: '%Y' }}
+    <small class="caption"
+      >© {{ 'now' | date: '%Y' }}
       <a href="/" title="">GOFL3XX</a>
     </small>
     <nav>
@@ -55,7 +64,6 @@
     </nav>
   </div>
 </footer>
-
 
 {% schema %}
 {

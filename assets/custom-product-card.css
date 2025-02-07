@@ -280,6 +280,12 @@
   letter-spacing: 0.1em;
   column-gap: 0.8rem;
   row-gap: 0.5rem;
+  color: #0d0d0d;
+}
+
+.card-information__options span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
 
 .card-information__options :is(button, span),
@@ -290,6 +296,13 @@
   cursor: pointer;
   font: var(--gf-body-utility-large);
   font-size: 1.1rem;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.card-information__options :is(button),
+.card-information__options-upsell :is(button) {
+  font-weight: 400;
 }
 
 @media screen and (min-width: 1200px) {
@@ -655,6 +668,7 @@ gf-product-card[mobile-active] .card-mobile-options__options {
 
 .price-item--sale {
   color: var(--gf-color-brand-primary);
+  font-family: 'Poppins', sans-serif;
 }
 
 .price-container {

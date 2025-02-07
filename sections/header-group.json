@@ -32,7 +32,7 @@
 		"settings": {
 			"color_scheme": "scheme-1",
 			"logo_position": "top-center",
-			"menu": "main-menu",
+			"menu": "2025-main-menu",
 			"menu_type_desktop": "megamenu",
 			"sticky_header_type": "on-scroll-up",
 			"show_line_separator": true,

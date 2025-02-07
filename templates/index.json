@@ -95,7 +95,7 @@
       "settings": {
         "title": "Chicago Drop",
         "heading_size": "h2",
-        "collection": "gf-25",
+        "collection": "chicago-drop",
         "products_to_show": 8,
         "columns_desktop": 4,
         "color_scheme": "scheme-1",
@@ -116,25 +116,25 @@
         "collection1": {
           "type": "featured_collection",
           "settings": {
-            "collection": "gf-25"
+            "collection": "chicago-drop"
           }
         },
         "collection2": {
           "type": "featured_collection",
           "settings": {
-            "collection": "womens"
+            "collection": "street-wear"
           }
         },
         "collection3": {
           "type": "featured_collection",
           "settings": {
-            "collection": "mens"
+            "collection": "hoodies"
           }
         },
         "collection4": {
           "type": "featured_collection",
           "settings": {
-            "collection": "kids"
+            "collection": "head-wear"
           }
         }
       },

@@ -8,30 +8,33 @@
         "footer-0": {
           "type": "link_list",
           "settings": {
-            "heading": "Quick links",
-            "menu": "footer"
+            "heading": "About GO-FL3XX",
+            "menu": "about-go-fl3xx"
           }
         },
         "footer-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Info",
-            "menu": "footer"
+            "heading": "Social",
+            "menu": "social"
           }
         },
         "footer-2": {
-          "type": "text",
+          "type": "link_list",
           "settings": {
-            "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+            "heading": "Support",
+            "menu": "support"
+          }
+        },
+        "footer-3": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Programs",
+            "menu": "programs"
           }
         }
       },
-      "block_order": [
-        "footer-0",
-        "footer-1",
-        "footer-2"
-      ],
+      "block_order": ["footer-0", "footer-1", "footer-2", "footer-3"],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
@@ -47,7 +50,5 @@
       }
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }

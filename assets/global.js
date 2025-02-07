@@ -77,7 +77,21 @@ document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   }
 
   summary.addEventListener('click', (event) => {
-    event.currentTarget.setAttribute('aria-expanded', !event.currentTarget.closest('details').hasAttribute('open'));
+    const details = event.currentTarget.closest('details');
+    const isOpen = !details.hasAttribute('open');
+
+    // Close all other mega menus if this is a mega menu
+    if (details.classList.contains('megamenu')) {
+      document.querySelectorAll('details.megamenu[open]').forEach((openMenu) => {
+        if (openMenu !== details) {
+          openMenu.removeAttribute('open');
+          openMenu.querySelector('summary').setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Update aria-expanded for the clicked menu
+    event.currentTarget.setAttribute('aria-expanded', isOpen);
   });
 
   if (summary.closest('header-drawer, menu-drawer')) return;

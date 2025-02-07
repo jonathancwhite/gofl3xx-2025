@@ -18,6 +18,10 @@
   max-width: unset;
 }
 
+.container--product {
+  max-width: 80svw;
+}
+
 .container--no-padding {
   --gf-grid-gutter: 0;
   padding: 0;

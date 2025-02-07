@@ -1465,5 +1465,38 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Footer Menus",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Manage footer menus"
+      },
+      {
+        "type": "paragraph",
+        "content": "Select the menus to be displayed in the footer."
+      },
+      {
+        "type": "link_list",
+        "id": "about_go_fl3xx",
+        "label": "About GO-FL3XX"
+      },
+      {
+        "type": "link_list",
+        "id": "social",
+        "label": "Social"
+      },
+      {
+        "type": "link_list",
+        "id": "support",
+        "label": "Support"
+      },
+      {
+        "type": "link_list",
+        "id": "programs",
+        "label": "Programs"
+      }
+    ]
   }
 ]
