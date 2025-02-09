@@ -12,27 +12,13 @@
             "subheading": "Available Now",
             "text_color": "white",
             "button_label": "Shop all",
-            "button_link": "shopify://collections/all",
-            "show_modal": false
-          }
-        },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/IMG_3441.jpg",
-            "heading": "NEW ARRIVALS",
-            "heading_color": "white",
-            "subheading": "Spring Collection 2024",
-            "text_color": "white",
-            "button_label": "Explore",
-            "button_link": "shopify://collections/new-arrivals",
+            "button_link": "shopify://collections/chicago-drop",
             "show_modal": false
           }
         }
       },
       "block_order": [
-        "slide_1",
-        "slide_2"
+        "slide_1"
       ],
       "settings": {
         "slide_height": "large",
@@ -55,22 +41,22 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Giveaways Heading",
+            "heading": "Giveaways",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "text": "<p>Giveaways are coming soon... but this is just a HEADS up! Check back later for more details.</p>",
             "text_style": "body"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "button_label": "View Giveaway",
-            "button_link": "/your-link",
+            "button_label": "Coming Soon",
+            "button_link": "/#",
             "button_style_secondary": false
           }
         }
@@ -164,7 +150,7 @@
 			"color_scheme": "scheme-1",
 			"padding_top": 36,
 			"padding_bottom": 36,
-			"cover_image": "shopify://shop_images/youtube-cover-sample.png"
+			"cover_image": "shopify://shop_images/gofl3xx-youtube-thumbnail.png"
 		}
     }
   },

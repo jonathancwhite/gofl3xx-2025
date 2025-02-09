@@ -142,7 +142,7 @@
       "name": "Logo",
       "settings": {
         "logo_image": {
-          "label": "Logo"
+          "label": "Logo image"
         },
         "logo_width": {
           "label": "Desktop logo width",
