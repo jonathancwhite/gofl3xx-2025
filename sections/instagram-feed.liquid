@@ -1,0 +1,63 @@
+{% render 'instagram-feed' %}
+
+{% schema %}
+{
+  "name": "Instagram Feed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Follow us on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "View Instagram"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "instagram_post",
+      "name": "Instagram Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Instagram Post URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Feed",
+      "blocks": [
+        {
+          "type": "instagram_post"
+        },
+        {
+          "type": "instagram_post"
+        },
+        {
+          "type": "instagram_post"
+        },
+        {
+          "type": "instagram_post"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

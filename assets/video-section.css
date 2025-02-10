@@ -46,3 +46,17 @@
 .video-section__media.media-fit-cover video {
   object-fit: cover;
 }
+
+.youtube-shorts {
+  width: 100%;
+  height: 100vh;
+  max-height: 600px;
+  margin: 0 auto;
+  display: block;
+}
+
+@media screen and (max-width: 749px) {
+  .youtube-shorts {
+    max-height: 400px;
+  }
+}

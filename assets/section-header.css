@@ -231,6 +231,10 @@ gf-header.has-open-megamenu .megamenu-overlay {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.header-inverse .header__heading-link img {
+  filter: brightness(0);
+}
+
 .header-inverse .header__heading-link .h2,
 .header-inverse span.h6,
 .header-inverse a.h6 {
