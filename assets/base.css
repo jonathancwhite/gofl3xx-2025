@@ -2650,6 +2650,10 @@ input[type='checkbox'] {
   .header--mobile-left {
     grid-template-columns: auto 2fr 1fr;
   }
+
+  .announcement-bar__message {
+    font-size: 14px;
+  }
 }
 
 @media screen and (min-width: 990px) {
