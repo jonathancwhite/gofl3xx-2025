@@ -450,5 +450,12 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {% render 'icon-search' %}
+    {%- comment -%}Search icon{%- endcomment -%}
+    {% render 'icon-cart' %}
+    {%- comment -%}Cart icon{%- endcomment -%}
+    {% render 'icon-hamburger' %}
+    {%- comment -%}Hamburger menu icon{%- endcomment -%}
   </body>
 </html>

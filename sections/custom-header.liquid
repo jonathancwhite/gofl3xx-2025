@@ -156,10 +156,15 @@
     js-header
     data-menu-open="false"
   >
-    <!-- Top-center logo or search -->
-    {% if section.settings.logo_position == 'top-center' or section.settings.menu == blank %}
-      {% render 'header-search', input_id: 'Search-In-Modal-1' %}
-    {% endif %}
+    <!-- Mobile Menu Button -->
+    <button
+      class="header__icon header__icon--menu header__icon--mobile"
+      aria-expanded="false"
+      aria-label="Menu"
+      data-menu-drawer-toggle
+    >
+      {% render 'icon-hamburger' %}
+    </button>
 
     <!-- Logo Section -->
     {% if section.settings.logo_position != 'middle-center' %}
@@ -195,14 +200,40 @@
       {% endif %}
     {% endif %}
 
+    <!-- Mobile Icons -->
+    <div class="header__icons header__icons--mobile">
+      <button
+        type="button"
+        class="header__icon header__icon--search"
+        aria-expanded="false"
+        aria-label="{{ 'general.search.search' | t }}"
+      >
+        {% render 'icon-search' %}
+      </button>
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link">
+        {% render 'icon-cart' %}
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
+
     <!-- Desktop Menu -->
-    {% if section.settings.menu %}
-      {% if section.settings.menu_type_desktop == 'dropdown' %}
-        {% render 'header-dropdown-menu' %}
-      {% elsif section.settings.menu_type_desktop != 'drawer' %}
-        {% render 'header-mega-menu' %}
+    <div class="header__desktop-menu">
+      {% if section.settings.menu %}
+        {% if section.settings.menu_type_desktop == 'dropdown' %}
+          {% render 'header-dropdown-menu' %}
+        {% elsif section.settings.menu_type_desktop != 'drawer' %}
+          {% render 'header-mega-menu' %}
+        {% endif %}
       {% endif %}
-    {% endif %}
+    </div>
 
     <!-- Middle-center logo -->
     {% if section.settings.logo_position == 'middle-center' %}
@@ -240,36 +271,68 @@
 
     <!-- Icons and Localizations -->
     <div class="header__utility">
-      <!-- Account Icon -->
-      <a
-        href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-        class="h6 hidden--sm hidden--md {% if section.settings.menu != blank %} small-hide{% endif %}"
-        rel="nofollow"
-      >
-        Account
-      </a>
+      <ul class="flex">
+        <!-- Account Icon -->
+        <li class="header__utilityMenu">
+          <a
+            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+            class="h6 hidden--sm hidden--md {% if section.settings.menu != blank %} small-hide{% endif %} header__menu-item"
+            rel="nofollow"
+          >
+            Account
+          </a>
+        </li>
 
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+        <li class="header__utilityMenu">
+          {% render 'header-search', input_id: 'Search-In-Modal' %}
+        </li>
 
-      <!-- Cart Icon -->
-      <a
-        href="{{ routes.cart_url }}"
-        class="header__icon header__icon--cart link focus-inset"
-        id="cart-icon-bubble"
-      >
-        <span class="cart-text h6">CART</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
+        <!-- Cart Icon -->
+        <li class="header__utilityMenu">
+          <a
+            href="{{ routes.cart_url }}"
+            class="header__icon header__icon--cart link focus-inset h6 header__menu-item"
+            id="cart-icon-bubble"
+          >
+            CART
+            {%- if cart != empty -%}
+              <div class="cart-count-bubble">
+                {%- if cart.item_count < 100 -%}
+                  <span aria-hidden="true">{{ cart.item_count }}</span>
+                {%- endif -%}
+                <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+              </div>
             {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
-      </a>
+          </a>
+        </li>
+      </ul>
     </div>
   </header>
 </{{ header_tag }}>
+
+<!-- Mobile Menu Drawer -->
+<div class="menu-drawer">
+  <div class="menu-drawer__inner-container">
+    <div class="menu-drawer__navigation-container">
+      <nav class="menu-drawer__navigation">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="menu-drawer__menu-item h3">
+            {{ link.title }}
+          </a>
+          {%- if link.links != blank -%}
+            <div class="menu-drawer__submenu">
+              {%- for childlink in link.links -%}
+                <a href="{{ childlink.url }}" class="menu-drawer__menu-item">
+                  {{ childlink.title }}
+                </a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    </div>
+  </div>
+</div>
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
@@ -280,10 +343,12 @@
     connectedCallback() {
       this.header = document.querySelector('.section-header');
       this.jsHeader = document.querySelector('[js-header]');
-      console.log('Connected Header Elements:', {
-        sectionHeader: this.header,
-        jsHeader: this.jsHeader,
-      });
+      this.menuButton = document.querySelector('[data-menu-drawer-toggle]');
+      this.menuDrawer = document.querySelector('.menu-drawer');
+
+      if (this.menuButton) {
+        this.menuButton.addEventListener('click', this.handleMenuToggle.bind(this));
+      }
 
       this.headerIsAlwaysSticky =
         this.getAttribute('data-sticky-type') === 'always' ||
@@ -312,6 +377,30 @@
       console.log('Scroll listener added');
 
       this.createObserver();
+
+      document.addEventListener('click', (event) => {
+        if (
+          this.jsHeader.dataset.menuOpen === 'true' &&
+          !this.menuDrawer.contains(event.target) &&
+          !this.menuButton.contains(event.target)
+        ) {
+          this.handleMenuToggle();
+        }
+      });
+    }
+
+    handleMenuToggle() {
+      const isOpen = this.jsHeader.dataset.menuOpen === 'true';
+      this.jsHeader.dataset.menuOpen = (!isOpen).toString();
+      this.menuButton.setAttribute('aria-expanded', (!isOpen).toString());
+
+      if (!isOpen) {
+        document.body.style.overflow = 'hidden';
+        this.menuDrawer.classList.add('menu-drawer--open');
+      } else {
+        document.body.style.overflow = '';
+        this.menuDrawer.classList.remove('menu-drawer--open');
+      }
     }
 
     setHeaderHeight() {
@@ -407,18 +496,19 @@
     constructor() {
       super();
       this.detailsElement = this.querySelector('details');
+      this.jsHeader = document.querySelector('[js-header]');
       this.bindEvents();
     }
 
     bindEvents() {
-      this.detailsElement.addEventListener('click', function () {
-        this.handleClick.bind(this);
-      });
+      // Prevent default details toggle behavior
+      this.detailsElement.addEventListener('click', this.handleClick.bind(this));
       document.addEventListener('click', this.handleDocumentClick.bind(this));
     }
 
     handleClick(event) {
-      // Prevent the click from bubbling to the document
+      // Prevent the click from bubbling to the document and prevent default details behavior
+      event.preventDefault();
       event.stopPropagation();
 
       const isOpen = this.detailsElement.hasAttribute('open');
@@ -426,10 +516,19 @@
       // Close all other menus first
       this.closeOtherMenus();
 
-      // If this menu wasn't open, it will be opened by the details element
-      // If it was open, we'll close it
-      if (isOpen) {
+      if (!isOpen) {
+        // Opening the menu
+        this.detailsElement.setAttribute('open', '');
+        this.jsHeader?.classList.add('header-inverse');
+        this.jsHeader?.classList.remove('header-transparent');
+      } else {
+        // Closing the menu
         this.detailsElement.removeAttribute('open');
+        // Only remove header-inverse if we're on the index page and haven't scrolled past threshold
+        if (window.location.pathname === '/' && window.scrollY <= 100) {
+          this.jsHeader?.classList.remove('header-inverse');
+          this.jsHeader?.classList.add('header-transparent');
+        }
       }
     }
 
@@ -437,6 +536,11 @@
       // Close menu when clicking outside
       if (!this.contains(event.target)) {
         this.detailsElement.removeAttribute('open');
+        // Only remove header-inverse if we're on the index page and haven't scrolled past threshold
+        if (window.location.pathname === '/' && window.scrollY <= 100) {
+          this.jsHeader?.classList.remove('header-inverse');
+          this.jsHeader?.classList.add('header-transparent');
+        }
       }
     }
 

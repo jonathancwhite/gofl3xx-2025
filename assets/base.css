@@ -103,7 +103,7 @@
     --gf-h3-font: 600 4.8rem/0.9 var(--gf-font-family-heading);
     --gf-h4-font: 600 2.4rem/1.1 var(--gf-font-family-heading-wide);
     --gf-h5-font: 600 1.8rem/0.9 var(--gf-font-family-heading);
-    --gf-h6-font: 600 1.6rem/1.1 var(--gf-font-family-heading-wide);
+    --gf-h6-font: 600 1.5rem/1.1 var(--gf-font-family-heading-wide);
     --gf-body-font: 400 1.2rem/1.4 var(--gf-font-family-body);
     --gf-body-font-large: 600 1.6rem/1.6 var(--gf-font-family-body);
     --gf-body-caption: 400 1.1rem/1.4 var(--gf-font-family-body);
@@ -2586,10 +2586,6 @@ input[type='checkbox'] {
     grid-template-areas: 'left-icons heading icons';
     grid-template-columns: 1fr auto 1fr;
   }
-
-  .header:not(.header--middle-left, .header--middle-center) .header__inline-menu {
-    margin-top: 1.05rem;
-  }
 }
 
 .header *[tabindex='-1']:focus {
@@ -2694,13 +2690,6 @@ input[type='checkbox'] {
   overflow: hidden;
 }
 
-.header__icon:not(.header__icon--summary),
-.header__icon span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .header__icon {
   color: rgb(var(--color-foreground));
 }
@@ -2732,14 +2721,11 @@ input[type='checkbox'] {
 
 .header__icon,
 .header__icon--cart .icon {
-  height: 4.4rem;
-  width: 4.4rem;
   padding: 0;
 }
 
 .header__icon--cart {
   position: relative;
-  margin-right: -1.2rem;
 }
 
 .header__icon--menu[aria-expanded='true']::before {
@@ -2898,6 +2884,8 @@ details[open] .modal-overlay::after {
   opacity: 1;
   transform: scale(1);
   transition: transform 150ms ease, opacity 150ms ease;
+  background: transparent;
+  border: none;
 }
 
 details:not([open]) > .header__icon--menu .icon-close,
@@ -2937,7 +2925,6 @@ details[open] > .header__submenu {
 
 /* Header menu */
 .header__inline-menu {
-  margin-left: -1.2rem;
   grid-area: navigation;
   display: none;
 }
@@ -2965,6 +2952,12 @@ details[open] > .header__submenu {
   }
 }
 
+@media screen and (min-width: 990px) {
+  .header__icon--menu {
+    display: none;
+  }
+}
+
 .header__menu {
   padding: 0 1rem;
 }
@@ -2981,6 +2974,11 @@ details[open] > .header__submenu {
   font-size: 1.5rem;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
+}
+
+.header__utilityMenu > .header__menu-item,
+.header__utlityMenu > .header__menu-item > span > a.h6 {
+  font-size: 1.5rem;
 }
 
 .header__menu-item:hover {
@@ -3793,12 +3791,6 @@ details-disclosure > details {
   100% {
     transform: translateX(100%) scaleX(0);
   }
-}
-
-.header__icon--cart {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .cart-count-bubble {

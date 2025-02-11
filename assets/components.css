@@ -265,7 +265,7 @@ gf-details-modal:not(:defined) {
 
 .megamenu[open] .broadcast-menu__content {
   opacity: 1;
-  transform: translateX(-2%) translateY(1rem);
+  transform: translateX(-1%) translateY(1rem);
 }
 
 .broadcast-menu__list {
