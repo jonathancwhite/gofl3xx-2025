@@ -200,30 +200,6 @@
       {% endif %}
     {% endif %}
 
-    <!-- Mobile Icons -->
-    <div class="header__icons header__icons--mobile">
-      <button
-        type="button"
-        class="header__icon header__icon--search"
-        aria-expanded="false"
-        aria-label="{{ 'general.search.search' | t }}"
-      >
-        {% render 'icon-search' %}
-      </button>
-
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link">
-        {% render 'icon-cart' %}
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
-      </a>
-    </div>
-
     <!-- Desktop Menu -->
     <div class="header__desktop-menu">
       {% if section.settings.menu %}
@@ -268,6 +244,30 @@
         </h1>
       {% endif %}
     {% endif %}
+
+    <!-- Mobile Icons -->
+    <div class="header__icons header__icons--mobile">
+      <button
+        type="button"
+        class="header__icon header__icon--search"
+        aria-expanded="false"
+        aria-label="{{ 'general.search.search' | t }}"
+      >
+        {% render 'icon-search' %}
+      </button>
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link">
+        {% render 'icon-cart' %}
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
 
     <!-- Icons and Localizations -->
     <div class="header__utility">
@@ -316,7 +316,7 @@
     <div class="menu-drawer__navigation-container">
       <nav class="menu-drawer__navigation">
         {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}" class="menu-drawer__menu-item h3">
+          <a href="{{ link.url }}" class="menu-drawer__menu-item">
             {{ link.title }}
           </a>
           {%- if link.links != blank -%}

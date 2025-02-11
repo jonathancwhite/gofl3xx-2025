@@ -1,5 +1,8 @@
-.header__icon--menu {
+.header__icon {
   position: initial;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .js menu-drawer > details > summary::before,
@@ -47,11 +50,6 @@ menu-drawer > details[open] > summary::before {
   z-index: 100;
 }
 
-.js .menu-drawer {
-  height: calc(100vh - 100%);
-  height: calc(var(--viewport-height, 100vh) - (var(--header-bottom-position, 100%)));
-}
-
 .js details[open] > .menu-drawer,
 .js details[open] > .menu-drawer__submenu {
   transition: transform var(--duration-default) ease, visibility var(--duration-default) ease;
@@ -90,7 +88,11 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__navigation {
-  padding: 3rem 0;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1em;
 }
 
 .menu-drawer__inner-submenu {
@@ -139,19 +141,17 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .js .menu-drawer__submenu {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  bottom: 0;
-  left: 0;
   background-color: rgb(var(--color-background));
   z-index: 1;
-  transform: translateX(100%);
-  visibility: hidden;
+  color: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  margin-left: 2em;
 }
 
-.js .menu-drawer__submenu .menu-drawer__submenu {
-  overflow-y: auto;
+.js .menu-drawer__submenu .menu-drawer__menu-item {
+  font-size: 12px;
 }
 
 .menu-drawer__close-button {

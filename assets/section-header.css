@@ -451,10 +451,10 @@ gf-header.has-open-megamenu .megamenu-overlay {
 
 .menu-drawer {
   position: fixed;
-  top: 0;
+  top: 80px;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   background: var(--gf-color-day);
   transform: translateX(-100%);
   visibility: hidden;
@@ -466,18 +466,6 @@ gf-header.has-open-megamenu .megamenu-overlay {
   transform: translateX(0);
   visibility: visible;
   transition: transform 0.3s ease, visibility 0s linear 0s;
-}
-
-/* Desktop Styles */
-@media screen and (min-width: 990px) {
-  .header__icon--mobile,
-  .header__icons--mobile {
-    display: none;
-  }
-
-  .header__desktop-menu {
-    display: block;
-  }
 }
 
 /* Header Transparent Styles */
@@ -550,4 +538,33 @@ gf-header.has-open-megamenu .megamenu-overlay {
   align-items: center;
   justify-content: center;
   width: max-content;
+}
+
+.header__icons--mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+/* Desktop Styles */
+@media screen and (max-width: 990px) {
+  .header__utility {
+    display: none;
+  }
+
+  .header__heading .header__heading-link span.h2 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .header__icon--mobile,
+  .header__icons--mobile {
+    display: none;
+  }
+
+  .header__desktop-menu {
+    display: block;
+  }
 }
