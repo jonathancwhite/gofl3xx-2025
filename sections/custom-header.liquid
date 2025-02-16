@@ -496,38 +496,42 @@
     constructor() {
       super();
       this.detailsElement = this.querySelector('details');
+      this.summaryElement = this.querySelector('details > summary');
       this.jsHeader = document.querySelector('[js-header]');
       this.bindEvents();
     }
 
     bindEvents() {
-      // Prevent default details toggle behavior
-      this.detailsElement.addEventListener('click', this.handleClick.bind(this));
+      // Only prevent default on the summary element
+      this.summaryElement.addEventListener('click', this.handleClick.bind(this));
       document.addEventListener('click', this.handleDocumentClick.bind(this));
     }
 
     handleClick(event) {
-      // Prevent the click from bubbling to the document and prevent default details behavior
-      event.preventDefault();
-      event.stopPropagation();
+      // Only prevent default if clicking the summary element
 
-      const isOpen = this.detailsElement.hasAttribute('open');
+      if (event.target === this.summaryElement || event.target.closest('summary') === this.summaryElement) {
+        event.preventDefault();
+        event.stopPropagation();
 
-      // Close all other menus first
-      this.closeOtherMenus();
+        const isOpen = this.detailsElement.hasAttribute('open');
 
-      if (!isOpen) {
-        // Opening the menu
-        this.detailsElement.setAttribute('open', '');
-        this.jsHeader?.classList.add('header-inverse');
-        this.jsHeader?.classList.remove('header-transparent');
-      } else {
-        // Closing the menu
-        this.detailsElement.removeAttribute('open');
-        // Only remove header-inverse if we're on the index page and haven't scrolled past threshold
-        if (window.location.pathname === '/' && window.scrollY <= 100) {
-          this.jsHeader?.classList.remove('header-inverse');
-          this.jsHeader?.classList.add('header-transparent');
+        // Close all other menus first
+        this.closeOtherMenus();
+
+        if (!isOpen) {
+          // Opening the menu
+          this.detailsElement.setAttribute('open', '');
+          this.jsHeader?.classList.add('header-inverse');
+          this.jsHeader?.classList.remove('header-transparent');
+        } else {
+          // Closing the menu
+          this.detailsElement.removeAttribute('open');
+          // Only remove header-inverse if we're on the index page and haven't scrolled past threshold
+          if (window.location.pathname === '/' && window.scrollY <= 100) {
+            this.jsHeader?.classList.remove('header-inverse');
+            this.jsHeader?.classList.add('header-transparent');
+          }
         }
       }
     }

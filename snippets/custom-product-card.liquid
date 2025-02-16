@@ -46,6 +46,9 @@
                       disabled
                     {% endunless %}
                     data-variant-id="{{ variant.id }}"
+                    {% unless card_product.available %}
+                      disabled
+                    {% endunless %}
                   >
                     {{ variant.title }}
                   </button>
@@ -59,6 +62,11 @@
                 style="padding-bottom: {{ 1 | divided_by: card_product.featured_media.aspect_ratio | times: 100 }}%;"
               >
                 {%- if card_product.featured_media -%}
+                  {% unless card_product.available %}
+                    <div class="out-of-stock-badge">
+                      <span>Out of Stock</span>
+                    </div>
+                  {% endunless %}
                   <img
                     srcset="
                       {%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
@@ -81,7 +89,13 @@
                   {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                 {%- endif -%}
               </div>
-              <div class="card__badge"></div>
+              <div class="card__badge">
+                {%- unless card_product.available -%}
+                  <div class="out-of-stock-badge">
+                    <span>Out of Stock</span>
+                  </div>
+                {%- endunless -%}
+              </div>
             </div>
           </div>
         </div>
